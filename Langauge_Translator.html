@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" />
+
+    <title>Language Translator</title>
+
+    <style>
+         *
+         {
+             margin: 0;
+             padding: 0;
+             font-family: 'Open Sans', sans-serif;
+             font-weight: 500;
+             text-align: center;
+         }
+        .top
+        {
+            background-color: #42A5F5;
+            width: 100%;
+            display: grid;
+            font-size: 18px;
+            color: white;
+          
+        }
+        .top >:nth-child(2) , :nth-child(3)
+        {
+           padding-top: 25px;
+        }
+
+        li
+        {
+            list-style-type: none;
+        }
+        
+        h1
+        {
+            color: white;
+            margin-top: 10px;
+        }
+
+        @media screen and (max-width: 600px) 
+      {  
+          .top> :nth-child(3)
+          {
+              margin-bottom: 18px;
+          }
+      }
+      @media screen and (min-width: 601px) and (max-width: 850px) 
+      {  
+          .top
+          {
+            grid-template-columns: repeat(3,1fr);
+          }
+      }
+      @media screen  and (min-width: 851px)
+      {
+
+        .top
+          {
+            grid-template-columns: repeat(3,1fr);
+            padding-bottom: 18px;
+          }
+
+        
+        .top>:nth-child(2)
+        {
+           text-align: right;
+        }    
+        .top>:nth-child(3)
+        {
+           text-align: left;
+           padding-left: 40px;
+        }      
+      }
+
+      h2
+      {
+          font-size: 40px;
+          margin-top: 20px;
+      }
+
+      .main
+      {
+          display: flex;
+          width: 60%;
+          margin: auto;
+      }
+
+      .main div
+      {
+        flex-grow: 1;
+      }
+
+      input
+      {
+         height: 270px;
+         background-color: rgb(241, 238, 238);
+         border: gray 2px solid;
+         width: 98%;
+         font-size: 20px;
+      } 
+
+      h4
+      {
+          text-align: left;
+      }
+      .abc
+      {
+          padding: 3%;
+      }
+    </style>
+</head>
+<body>
+    <ul class="top">
+        <li class="logo"><h1>Translator</h1></li>
+        <li>API Docs</li>
+        <li>GitHub</li>
+    </ul>
+</div>
+  
+<h2>Translation API</h2>
+
+<div class="main">
+    <div >
+        <div class="abc"><h4>Translate from 
+        <select > <option value="auto">Auto Detect</option> 
+         <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        </select></h4> 
+         </div>       
+        <div><input type="text" id= "input" oninput="show()"></div>
+    </div>
+
+    <div>
+        <div class="abc"><h4>Translate from 
+        <select id="select"><option value="hi">Hindi</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="en">English</option>
+
+        </select>              
+         </h4></h4>    
+        </div>
+
+        <div><input type="text" id="output"></div>
+    </div>
+</div>
+
+<script>
+    
+    async function show()
+    {
+    var input =document.getElementById("input").value 
+    var targett=document.getElementById("select").value 
+    //console.log(target)
+    const res = await fetch("https://libretranslate.de/translate", {
+	method: "POST",
+	body: JSON.stringify({
+		q: input,
+		source: "en",
+		target: targett,
+	}),
+	headers: { "Content-Type": "application/json" }
+    });
+     let save= await res.json();
+     save=save.translatedText;
+     if(input!=="")
+     {
+     document.getElementById("output").value=save; 
+     }
+     else
+     {
+        document.getElementById("output").value=""; 
+     }
+    }
+
+</script>
+
+</body>
+</html>
